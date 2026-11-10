@@ -164,6 +164,9 @@
 <p><code>Vec&lt;T&gt;</code>, <code>String</code>, <code>HashMap</code>, <code>HashSet</code>, iteration, updates, ownership in collections.</p>
 <h2 id="simple-explanation">Simple explanation</h2>
 <p>Collections store multiple values and often own their contents, so ownership rules still apply.</p>
+<h2 id="theory">Theory</h2>
+<p>Standard collections live on the heap and <em>own</em> their contents, so ownership and borrowing apply inside them too.</p>
+<ul><li><strong><code>Vec&lt;T&gt;</code></strong> is a growable, contiguous array: O(1) push and indexing, cache-friendly, the default "list" choice.</li><li><strong><code>String</code> is UTF-8.</strong> It wraps a <code>Vec&lt;u8&gt;</code>; because one character can be 1–4 bytes, indexing a <code>String</code> by position is deliberately not allowed. Use <code>chars()</code>, <code>bytes()</code>, or slices instead.</li><li><strong><code>HashMap&lt;K, V&gt;</code></strong> stores key→value pairs with average O(1) lookup. The <code>entry</code> API (<code>counts.entry(word).and_modify(..).or_insert(0)</code>) avoids double lookups and redundant clones.</li><li><strong>Borrowing from collections.</strong> <code>map.get(&amp;key)</code> returns <code>Option&lt;&amp;V&gt;</code> — a borrow tied to the map, so you cannot mutate the map while that borrow lives. Clone or restructure when needed.</li><li><strong>Choose by access pattern:</strong> <code>Vec</code> for ordered sequences, <code>HashMap</code> for lookup by key, <code>HashSet</code> for membership tests, <code>VecDeque</code> for queues.</li></ul>
 <h2 id="small-syntax-examples">Small syntax examples</h2>
 <pre class="code" data-lang="rust"><code><span class="tok-keyword">use</span> std::collections::<span class="tok-type">HashMap</span>;
 <span class="tok-keyword">let</span> <span class="tok-keyword">mut</span> counts = <span class="tok-type">HashMap</span>::<span class="tok-fn">new</span>();

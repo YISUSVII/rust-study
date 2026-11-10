@@ -6,6 +6,14 @@ Structs, tuple structs, methods, associated functions, enums, `Option`, `Result`
 ## Simple explanation
 Structs model data; enums model a value that can be one of multiple variants.
 
+## Theory
+Structs and enums are how you model a domain: structs are *product types* (a value has all of these fields), enums are *sum types* (a value is exactly one of these variants).
+
+- **`impl` blocks** attach behavior to data. Methods take `self` (by value), `&self` (read-only), or `&mut self` (mutating). Functions without `self` — like `String::from` — are *associated functions*, used as constructors and helpers.
+- **`Option<T>` replaces null.** Instead of any reference secretly being null, absence is explicit: `Some(value)` or `None`. The compiler forces you to handle both cases.
+- **`Result<T, E>`** does the same for failure: `Ok(value)` or `Err(error)` — you will meet it constantly from Level 8 onwards.
+- **Model invalid states away.** A well-designed enum (`enum OrderState { Placed, Paid, Shipped }`) makes illegal states unrepresentable, turning bugs into compile errors.
+
 ## Small syntax examples
 ```rust
 struct User { name: String, age: u8 }

@@ -164,6 +164,9 @@
 <p>Structs, tuple structs, methods, associated functions, enums, <code>Option</code>, <code>Result</code>.</p>
 <h2 id="simple-explanation">Simple explanation</h2>
 <p>Structs model data; enums model a value that can be one of multiple variants.</p>
+<h2 id="theory">Theory</h2>
+<p>Structs and enums are how you model a domain: structs are <em>product types</em> (a value has all of these fields), enums are <em>sum types</em> (a value is exactly one of these variants).</p>
+<ul><li><strong><code>impl</code> blocks</strong> attach behavior to data. Methods take <code>self</code> (by value), <code>&amp;self</code> (read-only), or <code>&amp;mut self</code> (mutating). Functions without <code>self</code> — like <code>String::from</code> — are <em>associated functions</em>, used as constructors and helpers.</li><li><strong><code>Option&lt;T&gt;</code> replaces null.</strong> Instead of any reference secretly being null, absence is explicit: <code>Some(value)</code> or <code>None</code>. The compiler forces you to handle both cases.</li><li><strong><code>Result&lt;T, E&gt;</code></strong> does the same for failure: <code>Ok(value)</code> or <code>Err(error)</code> — you will meet it constantly from Level 8 onwards.</li><li><strong>Model invalid states away.</strong> A well-designed enum (<code>enum OrderState { Placed, Paid, Shipped }</code>) makes illegal states unrepresentable, turning bugs into compile errors.</li></ul>
 <h2 id="small-syntax-examples">Small syntax examples</h2>
 <pre class="code" data-lang="rust"><code><span class="tok-keyword">struct</span> <span class="tok-type">User</span> { name: <span class="tok-type">String</span>, age: <span class="tok-type">u8</span> }
 <span class="tok-keyword">enum</span> <span class="tok-type">TrafficLight</span> { <span class="tok-type">Red</span>, <span class="tok-type">Yellow</span>, <span class="tok-type">Green</span> }</code></pre>

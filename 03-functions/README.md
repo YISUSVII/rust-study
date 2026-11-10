@@ -11,6 +11,15 @@
 
 Functions help organize logic into reusable units. In Rust, the last expression of a block can be an implicit return value.
 
+## Theory
+
+Functions are the basic unit of reuse, and Rust's design nudges you toward small, predictable ones.
+
+- **Statements vs expressions.** Statements (`let x = 5;`, any line ending in `;`) do something and return nothing. Expressions evaluate to a value. A function body ends in an optional final expression — that expression is the return value; adding `;` turns it into a statement and breaks the return.
+- **Types are mandatory in signatures.** Callers must be able to check a function without reading its body, so every parameter and the return type are explicit. This is intentional documentation.
+- **Early returns.** `return expr;` exits immediately; idiomatic Rust uses it for guard clauses, keeping the final expression as the "happy path".
+- **Conventions.** `snake_case` names, functions that do one thing, and pure functions (same input → same output, no side effects) wherever practical.
+
 ## Small syntax examples
 
 ```rust

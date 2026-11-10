@@ -148,6 +148,9 @@
 <p><code>mod</code>, <code>pub</code>, <code>use</code>, crate layout, library vs binary, Cargo.toml, dependencies, workspaces.</p>
 <h2 id="simple-explanation">Simple explanation</h2>
 <p>Modules organize code; crates package code for reuse; workspaces manage multiple crates.</p>
+<h2 id="theory">Theory</h2>
+<p>Rust's module system is a hierarchy with strict, opt-in visibility — the foundation of large projects.</p>
+<ul><li><strong>Packages, crates, modules.</strong> A <em>package</em> (with <code>Cargo.toml</code>) builds one or more <em>crates</em> (a library and/or binaries). Inside a crate, <em>modules</em> form a tree of namespaces.</li><li><strong>Everything is private by default.</strong> <code>pub</code> exposes an item to parent modules; <code>pub(crate)</code> limits visibility to the current crate. Hiding internals lets you refactor freely without breaking users.</li><li><strong><code>use</code> brings paths into scope</strong> — it imports no code and costs nothing at runtime.</li><li><strong>Crates.io + semantic versioning.</strong> Cargo resolves version requirements (<code>"1.2"</code> means <code>&gt;=1.2.0, &lt;2.0.0</code>) and locks exact versions in <code>Cargo.lock</code> so builds are reproducible.</li><li><strong>Workspaces</strong> let several related crates share one lockfile and one target directory — how real projects scale.</li></ul>
 <h2 id="small-syntax-examples">Small syntax examples</h2>
 <pre class="code" data-lang="rust"><code><span class="tok-keyword">mod</span> math;
 <span class="tok-keyword">use</span> math::add;</code></pre>

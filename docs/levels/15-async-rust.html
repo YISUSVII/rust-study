@@ -156,6 +156,9 @@
 <p><code>async</code>, <code>await</code>, futures, Tokio, async tasks, concurrent execution, basic HTTP requests.</p>
 <h2 id="simple-explanation">Simple explanation</h2>
 <p>Async handles many waiting tasks efficiently without one OS thread per task.</p>
+<h2 id="theory">Theory</h2>
+<p>Async Rust runs thousands of waiting tasks on a few OS threads through <em>cooperative</em> scheduling.</p>
+<ul><li><strong>A future is an inert state machine.</strong> <code>async fn</code> compiles to a type implementing <code>Future</code>; calling it does <em>nothing</em> until something polls it. <code>await</code> yields control back to the scheduler when work cannot progress yet.</li><li><strong>The runtime drives everything.</strong> Tokio (the de-facto standard) polls futures, wakes them when I/O is ready, and schedules tasks across a thread pool. No runtime, no execution.</li><li><strong>Concurrency ≠ parallelism.</strong> Threads run code simultaneously; async interleaves <em>waiting</em> tasks on few threads. For CPU-heavy work you still want threads (<code>tokio::task::spawn_blocking</code>).</li><li><strong>Never block the async thread.</strong> A blocking call (<code>std::thread::sleep</code>, synchronous file I/O) stalls every task on that thread — use <code>tokio::time::sleep</code> and async APIs instead.</li><li><strong>Composition.</strong> <code>tokio::join!</code> and <code>tokio::spawn</code> run futures concurrently; timeouts, retries, and cancellation compose cleanly because futures are values.</li></ul>
 <h2 id="small-syntax-examples">Small syntax examples</h2>
 <pre class="code" data-lang="rust"><code><span class="tok-keyword">async</span> <span class="tok-keyword">fn</span> <span class="tok-fn">hello</span>() { <span class="tok-macro">println!</span>(<span class="tok-string">"hello async"</span>); }</code></pre>
 <h2 id="common-mistakes">Common mistakes</h2>

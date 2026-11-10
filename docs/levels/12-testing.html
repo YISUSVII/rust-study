@@ -152,6 +152,9 @@
 <p>Unit tests, integration tests, <code>#[test]</code>, assertions, <code>cargo test</code>, test organization.</p>
 <h2 id="simple-explanation">Simple explanation</h2>
 <p>Tests lock expected behavior and make refactoring safer.</p>
+<h2 id="theory">Theory</h2>
+<p>Tests in Rust are ordinary code, compiled and run by a built-in harness — no external framework needed.</p>
+<ul><li><strong><code>#[test]</code> marks a test; <code>cargo test</code> discovers them and runs them in parallel</strong> across threads. Shared mutable state between tests is a design smell.</li><li><strong>Assertions as contracts.</strong> <code>assert!</code> checks conditions; <code>assert_eq!</code> / <code>assert_ne!</code> compare values and print both sides on failure. A good failure message tells you what <em>should</em> have happened.</li><li><strong><code>#[should_panic]</code></strong> verifies error paths; tests returning <code>Result</code> can use <code>?</code>.</li><li><strong>Unit tests</strong> live beside the code (<code>#[cfg(test)] mod tests</code>) and can touch private items; <strong>integration tests</strong> in <code>tests/</code> use only the public API — they test what users experience.</li><li><strong>The red–green–refactor loop:</strong> write a failing test, make it pass, then clean up. Tests are the safety net that makes fearless refactoring possible.</li></ul>
 <h2 id="small-syntax-examples">Small syntax examples</h2>
 <pre class="code" data-lang="rust"><code><span class="tok-attr">#[test]</span>
 <span class="tok-keyword">fn</span> <span class="tok-fn">adds_two_numbers</span>() { <span class="tok-macro">assert_eq!</span>(<span class="tok-number">2</span> + <span class="tok-number">2</span>, <span class="tok-number">4</span>); }</code></pre>

@@ -6,6 +6,15 @@ Closures, Iterator trait, `map`, `filter`, `fold`, `collect`, `enumerate`, `zip`
 ## Simple explanation
 Iterators transform data lazily and compositionally; closures capture surrounding context.
 
+## Theory
+Closures and iterators are Rust's functional core — expressive *and* zero-cost.
+
+- **Closures capture their environment automatically**: by reference, mutably, or by value (with `move`). Each closure implements one or more of the `Fn` / `FnMut` / `FnOnce` traits, which is how APIs declare what kind of closure they need.
+- **Iterators are lazy.** `map` / `filter` / `take` build a *description* of work; nothing happens until a consumer (`collect`, `sum`, `for`) pulls values through the chain.
+- **Zero-cost chains.** The compiler inlines iterator chains into loops as tight as hand-written ones — you get declarative style without the runtime price.
+- **`collect()` is the bridge** back to collections; its target type (often via the turbofish `collect::<Vec<_>>()`) decides what gets built.
+- **Prefer iterators over manual loops** when transforming data; keep explicit loops for side-effect-heavy or early-exit logic.
+
 ## Small syntax examples
 ```rust
 let sum: i32 = vec![1,2,3].into_iter().map(|n| n * 2).sum();

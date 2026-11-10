@@ -11,6 +11,15 @@
 
 Control flow lets your program decide and repeat behavior. Rust's `match` is exhaustive, which means the compiler forces you to handle all possible cases.
 
+## Theory
+
+Control flow in Rust is expression-oriented: most constructs *produce a value*, not just execute statements.
+
+- **`if` is an expression.** `let x = if cond { 1 } else { 2 };` works because blocks evaluate to their last expression. Both arms must return the same type, and it replaces the C-style ternary operator.
+- **`match` is exhaustive.** The compiler refuses to compile until every possible case is handled — no forgotten edge cases. `_` is the catch-all wildcard.
+- **Three loops, three purposes.** `loop` runs until `break` (and can *return* a value via `break value;`), `while` repeats on a condition, and `for` iterates over anything that implements `Iterator`.
+- **Ranges.** `1..5` excludes the end, `1..=5` includes it. Prefer `for` over manual index loops — it is safer and often faster.
+
 ## Small syntax examples
 
 ```rust

@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Level 0 — Setup · Rust Study — Zero → Ninja</title>
-<meta name="description" content="Rust projects are usually built with Cargo, Rust&#x27;s official package manager and build tool. rustc compiles a single file directly, while Cargo helps manage complete projects.">
+<meta name="description" content="Rust projects are usually built with Cargo, Rust&#x27;s official package manager and build tool. rustc compiles a single file directly, while Cargo helps manage complete projects. Everything is installed and kept up to date through rustup, the official toolchain manager.">
 <meta property="og:title" content="Level 0 — Setup · Rust Study — Zero → Ninja">
-<meta property="og:description" content="Rust projects are usually built with Cargo, Rust&#x27;s official package manager and build tool. rustc compiles a single file directly, while Cargo helps manage complete projects.">
+<meta property="og:description" content="Rust projects are usually built with Cargo, Rust&#x27;s official package manager and build tool. rustc compiles a single file directly, while Cargo helps manage complete projects. Everything is installed and kept up to date through rustup, the official toolchain manager.">
 <meta property="og:type" content="website">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../assets/style.css">
@@ -137,34 +137,74 @@
 <header class="page-head">
   <div class="eyebrow">Level 0 · Beginner</div>
   <h1>Setup</h1>
-  <p class="lead">Rust projects are usually built with Cargo, Rust&#x27;s official package manager and build tool. rustc compiles a single file directly, while Cargo helps manage complete projects.</p>
+  <p class="lead">Rust projects are usually built with Cargo, Rust&#x27;s official package manager and build tool. rustc compiles a single file directly, while Cargo helps manage complete projects. Everything is installed and kept up to date through rustup, the official toolchain manager.</p>
 </header>
 
 <section class="prose"><h2 id="what-you-will-learn">What you will learn</h2>
-<ul><li>Installing Rust with <code>rustup</code></li><li>Using <code>rustc</code> and <code>cargo</code></li><li>Creating and running your first project</li><li>Running quality tools: <code>cargo fmt</code> and <code>cargo clippy</code></li></ul>
+<ul><li>Installing Rust with <code>rustup</code> on Windows, macOS, and Linux</li><li>Using <code>rustc</code> and <code>cargo</code></li><li>Creating and running your first project</li><li>Trying Rust online with the Rust Playground</li><li>Running quality tools: <code>cargo fmt</code> and <code>cargo clippy</code></li></ul>
 <h2 id="simple-explanation">Simple explanation</h2>
-<p>Rust projects are usually built with Cargo, Rust's official package manager and build tool. <code>rustc</code> compiles a single file directly, while Cargo helps manage complete projects.</p>
-<h2 id="small-syntax-examples">Small syntax examples</h2>
+<p>Rust projects are usually built with Cargo, Rust's official package manager and build tool. <code>rustc</code> compiles a single file directly, while Cargo helps manage complete projects. Everything is installed and kept up to date through <code>rustup</code>, the official toolchain manager.</p>
+<h2 id="official-websites">Official websites</h2>
+<ul><li>Rust homepage: <a href="https://www.rust-lang.org/" target="_blank" rel="noopener">https://www.rust-lang.org/</a></li><li>Install page: <a href="https://www.rust-lang.org/tools/install" target="_blank" rel="noopener">https://www.rust-lang.org/tools/install</a></li><li><code>rustup</code> installer: <a href="https://rustup.rs/" target="_blank" rel="noopener">https://rustup.rs/</a></li><li>The Rust Book: <a href="https://doc.rust-lang.org/book/" target="_blank" rel="noopener">https://doc.rust-lang.org/book/</a></li><li>Standard library docs: <a href="https://doc.rust-lang.org/std/" target="_blank" rel="noopener">https://doc.rust-lang.org/std/</a></li><li>Cargo docs: <a href="https://doc.rust-lang.org/cargo/" target="_blank" rel="noopener">https://doc.rust-lang.org/cargo/</a></li><li>Package registry: <a href="https://crates.io/" target="_blank" rel="noopener">https://crates.io/</a></li><li>Online playground: <a href="https://play.rust-lang.org/" target="_blank" rel="noopener">https://play.rust-lang.org/</a></li></ul>
+<h2 id="install-on-windows">Install on Windows</h2>
+<ol><li>Download <code>rustup-init.exe</code> from <a href="https://rustup.rs/" target="_blank" rel="noopener">https://rustup.rs/</a> (or the install page above).</li><li>Run it and choose option <code>1</code> (<em>Proceed with standard installation</em>).</li><li>If prompted, install the <strong>Microsoft C++ Build Tools</strong> first (Visual Studio Build Tools with the "Desktop development with C++" workload). Rust's default Windows toolchain (<code>x86_64-pc-windows-msvc</code>) needs them to link programs.</li><li>Close and reopen the terminal so <code>PATH</code> is refreshed.</li></ol>
+<p>PowerShell alternative (the C++ Build Tools are still required):</p>
+<pre class="code" data-lang="powershell"><code>winget install Rustlang.Rustup</code></pre>
+<h2 id="install-on-macos">Install on macOS</h2>
+<p>Install the Xcode Command Line Tools (needed for the linker), then run the official <code>rustup</code> script and pick option <code>1</code>:</p>
+<pre class="code" data-lang="bash"><code>xcode-select --install
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+source "$HOME/.cargo/env"</code></pre>
+<p>Restart the terminal afterwards (or keep the <code>source</code> line above in your shell profile).</p>
+<h2 id="install-on-linux">Install on Linux</h2>
+<p>Make sure a C linker and build tools exist, then run the official <code>rustup</code> script and pick option <code>1</code>:</p>
+<pre class="code" data-lang="bash"><code># Debian / Ubuntu:
+sudo apt update &amp;&amp; sudo apt install build-essential curl
+# Fedora:
+sudo dnf install gcc curl
+# Arch:
+sudo pacman -S --needed base-devel curl
+
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+source "$HOME/.cargo/env"</code></pre>
+<p>Restart the terminal afterwards.</p>
+<h2 id="verify-your-setup">Verify your setup</h2>
+<p>Run these in a <strong>new</strong> terminal. Each command should print a version, not an error:</p>
+<pre class="code" data-lang="bash"><code>rustc --version    # the compiler
+cargo --version    # the build tool and package manager
+rustup --version   # the toolchain manager
+rustup show        # installed toolchains and targets</code></pre>
+<p>Keep the toolchain current with:</p>
+<pre class="code" data-lang="bash"><code>rustup update</code></pre>
+<h2 id="try-rust-without-installing-the-playground">Try Rust without installing: the Playground</h2>
+<p>You can run Rust in the browser at <a href="https://play.rust-lang.org/" target="_blank" rel="noopener">https://play.rust-lang.org/</a> — nothing to install:</p>
+<ol><li>Open the link and edit the code in the editor.</li><li>Click <strong>Run</strong> (or press <code>Ctrl+Enter</code> / <code>Cmd+Enter</code>) and read the output below.</li><li>Use the top-right menus for <code>rustfmt</code>, <code>clippy</code>, and debug/release modes.</li></ol>
+<p>The Playground is perfect for testing small snippets, but install Rust locally for this course: the exercises use files, projects, and Cargo commands.</p>
+<h2 id="your-first-local-project">Your first local project</h2>
 <pre class="code" data-lang="bash"><code>cargo new hello_rust
 cd hello_rust
-cargo run
-cargo build
-cargo check
-cargo fmt
-cargo clippy</code></pre>
+cargo run               # build and run
+cargo check             # fast check, no binary produced
+cargo build             # debug build -&gt; target/debug/
+cargo build --release   # optimized build
+cargo fmt               # format the code
+cargo clippy            # lints and improvement suggestions</code></pre>
+<p>You can also compile a single file without Cargo:</p>
+<pre class="code" data-lang="bash"><code>rustc main.rs
+./main        # on Windows: .\main.exe</code></pre>
 <pre class="code" data-lang="rust"><code><span class="tok-keyword">fn</span> <span class="tok-fn">main</span>() {
     <span class="tok-macro">println!</span>(<span class="tok-string">"Hello, Rust!"</span>);
 }</code></pre>
 <h2 id="common-mistakes">Common mistakes</h2>
-<ul><li>Not restarting the terminal after <code>rustup</code> installation</li><li>Running <code>cargo run</code> outside a Cargo project folder</li><li>Ignoring <code>cargo fmt</code> / <code>cargo clippy</code> warnings early</li></ul>
+<ul><li>Not restarting the terminal after <code>rustup</code> installation</li><li>Skipping the C++ Build Tools (Windows) or Xcode CLT (macOS), causing linker errors</li><li>Running <code>cargo run</code> outside a Cargo project folder</li><li>Ignoring <code>cargo fmt</code> / <code>cargo clippy</code> warnings early</li></ul>
 <h2 id="exercises">Exercises</h2>
-<ol><li><strong>Install and verify</strong>: Install Rust and confirm <code>rustc --version</code> and <code>cargo --version</code> work.</li><li><strong>First project</strong>: Create <code>hello_rust</code> and run it.</li><li><strong>Tooling drill</strong>: Run <code>cargo check</code>, <code>cargo fmt</code>, and <code>cargo clippy</code>.</li></ol>
+<ol><li><strong>Install and verify</strong>: Install Rust and confirm <code>rustc --version</code> and <code>cargo --version</code> work.</li><li><strong>Playground warm-up</strong>: Run <code>println!("Hello from the playground");</code> at <a href="https://play.rust-lang.org/" target="_blank" rel="noopener">https://play.rust-lang.org/</a>.</li><li><strong>First project</strong>: Create <code>hello_rust</code> and run it locally.</li><li><strong>Tooling drill</strong>: Run <code>cargo check</code>, <code>cargo fmt</code>, and <code>cargo clippy</code>.</li></ol>
 <h2 id="hints">Hints</h2>
-<ul><li><code>cargo new &lt;project_name&gt;</code> creates a complete starter project.</li><li><code>cargo check</code> is faster than <code>cargo build</code> while iterating.</li></ul>
+<ul><li><code>cargo new &lt;project_name&gt;</code> creates a complete starter project.</li><li><code>cargo check</code> is faster than <code>cargo build</code> while iterating.</li><li><code>rustup doc --book</code> opens the Rust Book offline.</li></ul>
 <h2 id="bonus-challenge">Bonus challenge</h2>
 <p>Print your name and learning goal in the Hello World app.</p>
 <h2 id="references">References</h2>
-<ul><li><a href="https://www.rust-lang.org/tools/install" target="_blank" rel="noopener">https://www.rust-lang.org/tools/install</a></li><li><a href="https://doc.rust-lang.org/book/ch01-00-getting-started.html" target="_blank" rel="noopener">https://doc.rust-lang.org/book/ch01-00-getting-started.html</a></li><li><a href="https://doc.rust-lang.org/cargo/" target="_blank" rel="noopener">https://doc.rust-lang.org/cargo/</a></li></ul></section>
+<ul><li><a href="https://www.rust-lang.org/tools/install" target="_blank" rel="noopener">https://www.rust-lang.org/tools/install</a></li><li><a href="https://rustup.rs/" target="_blank" rel="noopener">https://rustup.rs/</a></li><li><a href="https://play.rust-lang.org/" target="_blank" rel="noopener">https://play.rust-lang.org/</a></li><li><a href="https://doc.rust-lang.org/book/ch01-00-getting-started.html" target="_blank" rel="noopener">https://doc.rust-lang.org/book/ch01-00-getting-started.html</a></li><li><a href="https://doc.rust-lang.org/cargo/" target="_blank" rel="noopener">https://doc.rust-lang.org/cargo/</a></li></ul></section>
 <nav class="pager" aria-label="Pagination"><span class="pager-link disabled"></span><a class="pager-link next" href="../levels/01-basics.html"><small>Next →</small>Level 1 — Rust Fundamentals</a></nav>
 <footer class="footer">Generated from <a href="https://github.com/YISUSVII/rust-study" target="_blank" rel="noopener">the course repository</a> · Learn Rust by building 🦀</footer>
 </main>
