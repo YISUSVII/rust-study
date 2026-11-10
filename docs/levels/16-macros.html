@@ -152,6 +152,9 @@
 <p><code>macro_rules!</code>, declarative macros, standard macros, procedural macro basics.</p>
 <h2 id="simple-explanation">Simple explanation</h2>
 <p>Macros generate Rust code, reducing repetitive patterns.</p>
+<h2 id="theory">Theory</h2>
+<p>Macros are <strong>compile-time code generation</strong>: they receive tokens and expand into ordinary Rust before type checking.</p>
+<ul><li><strong><code>macro_rules!</code> (declarative macros)</strong> pattern-match the tokens you pass in and substitute a template — think "a <code>match</code> statement for syntax". <code>vec![1, 2, 3]</code> and <code>println!</code> are built this way.</li><li><strong>Macros ≠ functions.</strong> They can take variable argument counts and generate definitions, and their arguments are not evaluated normally. The cost: they are harder to read, debug, and document — use them when functions or generics <em>cannot</em> express the pattern.</li><li><strong>Hygiene.</strong> Names introduced inside a macro do not leak out and collide with caller variables — a safety feature most macro systems lack.</li><li><strong>Procedural macros</strong> (<code>derive</code>, attribute, and function-like) run real Rust code at compile time over the parsed syntax tree; <code>#[derive(Debug)]</code> is the everyday example.</li><li><strong>Debugging tip:</strong> <code>cargo expand</code> shows the generated code when an expansion surprises you.</li></ul>
 <h2 id="small-syntax-examples">Small syntax examples</h2>
 <pre class="code" data-lang="rust"><code><span class="tok-macro">macro_rules!</span> say_hi { () =&gt; { <span class="tok-macro">println!</span>(<span class="tok-string">"hi"</span>); } }</code></pre>
 <h2 id="common-mistakes">Common mistakes</h2>

@@ -160,6 +160,9 @@
 <p>Threads, <code>std::thread</code>, move closures, channels, mutexes, <code>Arc</code>, shared state, Send/Sync.</p>
 <h2 id="simple-explanation">Simple explanation</h2>
 <p>Concurrency lets multiple tasks make progress, but shared state must be synchronized safely.</p>
+<h2 id="theory">Theory</h2>
+<p>Rust's slogan is <em>fearless concurrency</em>: the same ownership rules that prevent memory bugs also prevent <strong>data races</strong> — at compile time.</p>
+<ul><li><strong><code>Send</code> and <code>Sync</code></strong> are marker traits: <code>Send</code> means safe to move to another thread, <code>Sync</code> means safe to share between threads. The compiler checks them automatically, so a data race simply does not compile.</li><li><strong>Threads and <code>move</code> closures.</strong> <code>std::thread::spawn</code> starts an OS thread; <code>move</code> transfers captured data into it; <code>join</code> waits for completion.</li><li><strong>Two safe styles.</strong> <em>Message passing</em> with channels (<code>mpsc</code>) — "don't communicate by sharing memory; share memory by communicating" — and <em>shared state</em> with <code>Arc&lt;Mutex&lt;T&gt;&gt;</code>, where holding the lock is the only way to reach the data.</li><li><strong>Lock discipline matters.</strong> Keep critical sections short, avoid holding locks across blocking calls, and know that a panicking thread <em>poisons</em> its mutex.</li><li><strong>Start with message passing</strong>; reach for shared mutable state only when profiling says so.</li></ul>
 <h2 id="small-syntax-examples">Small syntax examples</h2>
 <pre class="code" data-lang="rust"><code><span class="tok-keyword">let</span> handle = std::thread::<span class="tok-fn">spawn</span>(|| <span class="tok-macro">println!</span>(<span class="tok-string">"from thread"</span>));
 handle.<span class="tok-fn">join</span>().<span class="tok-fn">unwrap</span>();</code></pre>

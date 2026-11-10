@@ -12,6 +12,16 @@
 
 Ownership is Rust's core memory-safety model. Every value has one owner, and when ownership moves, the previous binding is no longer valid. Borrowing lets you reference data without taking ownership.
 
+## Theory
+
+Ownership is how Rust guarantees memory safety **without a garbage collector**. The compiler enforces three rules: each value has exactly one owner; the value is dropped when its owner goes out of scope; ownership can move or be borrowed, never silently shared.
+
+- **Stack vs heap.** Stack data has a known fixed size and is freed automatically; heap data (like `String`) grows at runtime and must be freed exactly once. Ownership tracks *who* frees it — no `free`, no GC pauses, no leaks from forgotten cleanup.
+- **Move semantics.** Assigning a heap value to another binding *moves* ownership — the old binding becomes invalid. Types that are cheap to duplicate (`i32`, `bool`, ...) implement `Copy` and are copied instead.
+- **Borrowing.** `&T` reads without owning; `&mut T` mutates without owning. At any moment you may have *either* many `&T` *or* exactly one `&mut T` — never both. This single rule eliminates data races at compile time.
+- **No dangling references.** The compiler proves every reference outlives the data it points to; returning `&` to a local variable is a compile error, not a runtime crash.
+- **Slices.** `&str` and `&[T]` are views into data owned by someone else — the idiomatic way to accept "any string-like or sequence-like" input.
+
 ## Small syntax examples
 
 ```rust

@@ -6,6 +6,15 @@
 ## Simple explanation
 Collections store multiple values and often own their contents, so ownership rules still apply.
 
+## Theory
+Standard collections live on the heap and *own* their contents, so ownership and borrowing apply inside them too.
+
+- **`Vec<T>`** is a growable, contiguous array: O(1) push and indexing, cache-friendly, the default "list" choice.
+- **`String` is UTF-8.** It wraps a `Vec<u8>`; because one character can be 1–4 bytes, indexing a `String` by position is deliberately not allowed. Use `chars()`, `bytes()`, or slices instead.
+- **`HashMap<K, V>`** stores key→value pairs with average O(1) lookup. The `entry` API (`counts.entry(word).and_modify(..).or_insert(0)`) avoids double lookups and redundant clones.
+- **Borrowing from collections.** `map.get(&key)` returns `Option<&V>` — a borrow tied to the map, so you cannot mutate the map while that borrow lives. Clone or restructure when needed.
+- **Choose by access pattern:** `Vec` for ordered sequences, `HashMap` for lookup by key, `HashSet` for membership tests, `VecDeque` for queues.
+
 ## Small syntax examples
 ```rust
 use std::collections::HashMap;

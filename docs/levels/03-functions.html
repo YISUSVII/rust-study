@@ -148,6 +148,9 @@
 <ul><li>Function declarations</li><li>Parameters and return values</li><li>Expressions vs statements</li><li>Scope and reuse</li></ul>
 <h2 id="simple-explanation">Simple explanation</h2>
 <p>Functions help organize logic into reusable units. In Rust, the last expression of a block can be an implicit return value.</p>
+<h2 id="theory">Theory</h2>
+<p>Functions are the basic unit of reuse, and Rust's design nudges you toward small, predictable ones.</p>
+<ul><li><strong>Statements vs expressions.</strong> Statements (<code>let x = 5;</code>, any line ending in <code>;</code>) do something and return nothing. Expressions evaluate to a value. A function body ends in an optional final expression — that expression is the return value; adding <code>;</code> turns it into a statement and breaks the return.</li><li><strong>Types are mandatory in signatures.</strong> Callers must be able to check a function without reading its body, so every parameter and the return type are explicit. This is intentional documentation.</li><li><strong>Early returns.</strong> <code>return expr;</code> exits immediately; idiomatic Rust uses it for guard clauses, keeping the final expression as the "happy path".</li><li><strong>Conventions.</strong> <code>snake_case</code> names, functions that do one thing, and pure functions (same input → same output, no side effects) wherever practical.</li></ul>
 <h2 id="small-syntax-examples">Small syntax examples</h2>
 <pre class="code" data-lang="rust"><code><span class="tok-keyword">fn</span> <span class="tok-fn">add</span>(a: <span class="tok-type">i32</span>, b: <span class="tok-type">i32</span>) -&gt; <span class="tok-type">i32</span> {
     a + b

@@ -156,6 +156,9 @@
 <p><code>match</code>, <code>if let</code>, <code>let else</code>, destructuring, wildcard patterns, guards.</p>
 <h2 id="simple-explanation">Simple explanation</h2>
 <p>Pattern matching lets you unpack and validate data in one clear step.</p>
+<h2 id="theory">Theory</h2>
+<p>Pattern matching is Rust's way to <em>take data apart</em> and <em>decide</em> in the same construct.</p>
+<ul><li><strong><code>match</code> checks structure and values.</strong> Patterns can match literals, bind variables (<code>Some(x)</code>), destructure structs and tuples, and add extra conditions with guards (<code>if x &gt; 0</code>).</li><li><strong>Exhaustiveness as a refactoring tool.</strong> Because the compiler checks every case, adding a new enum variant produces errors at every <code>match</code> that must be updated — refactors become guided tours instead of bug hunts.</li><li><strong>Ergonomic shortcuts.</strong> <code>if let</code> handles one interesting pattern; <code>let else</code> bails out early when a pattern fails; <code>while let</code> loops while a pattern holds.</li><li><strong>Refutability.</strong> <code>Some(x)</code> might not match (refutable); a plain variable always matches (irrefutable). <code>let</code> requires irrefutable patterns, which is why <code>let Some(x) = opt;</code> is rejected by the compiler.</li></ul>
 <h2 id="small-syntax-examples">Small syntax examples</h2>
 <pre class="code" data-lang="rust"><code><span class="tok-keyword">if</span> <span class="tok-keyword">let</span> <span class="tok-type">Some</span>(value) = maybe { <span class="tok-macro">println!</span>(<span class="tok-string">"{value}"</span>); }</code></pre>
 <h2 id="common-mistakes">Common mistakes</h2>

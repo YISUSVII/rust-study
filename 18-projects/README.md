@@ -3,6 +3,14 @@
 ## What you will learn
 Apply all previous levels in practical projects with increasing complexity.
 
+## Theory
+Projects are where the course topics stop being isolated features and become design decisions.
+
+- **Every project reuses the same skeleton:** ownership to model data flow, enums for states, `Result` for failure, traits for testable seams, and modules for structure.
+- **Work in milestones.** Get the smallest end-to-end version working (parse input → produce output), then layer features. Ugly working code beats elegant unfinished code.
+- **Let the compiler drive refactors.** Introduce an enum, fix every `match` the compiler flags, repeat — this is how real Rust codebases evolve safely.
+- **Difficulty ladder.** Beginner projects train I/O and collections; intermediate ones add files, parsing, and error modeling; advanced ones add concurrency, networking, and async; ninja ones combine everything into long-lived systems.
+
 ## Beginner projects
 1. CLI Calculator
 2. Number Guessing Game

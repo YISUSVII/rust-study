@@ -6,6 +6,15 @@ Generic functions/structs, traits, trait bounds, `where`, `impl Trait`, lifetime
 ## Simple explanation
 Generics remove duplication, traits describe shared behavior, and lifetimes explain reference validity.
 
+## Theory
+Three tools fight duplication without giving up safety or speed.
+
+- **Generics** let one definition work for many types. Rust *monomorphizes*: at compile time it generates a specialized copy per concrete type, so generics have **zero runtime cost** — no boxing, no virtual calls.
+- **Traits define shared behavior**, like interfaces with superpowers: they can be implemented for types you didn't write, provide default methods, and act as bounds (`T: Display`) or as trait objects (`&dyn Display`).
+- **`where` clauses** keep complex bounds readable; `impl Trait` in argument or return position is shorthand for simple generics.
+- **Lifetimes describe how long references stay valid.** They change nothing at runtime — they give the compiler the relationships it needs to prove no reference dangles. When you annotate `fn first<'a>(a: &'a str, b: &'a str) -> &'a str`, you document that the result lives as long as the inputs.
+- **Elision rules** cover the common cases, so simple functions need no lifetime annotations at all.
+
 ## Small syntax examples
 ```rust
 fn max<T: Ord>(a: T, b: T) -> T { if a > b { a } else { b } }
